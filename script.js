@@ -6,7 +6,7 @@ var createIdea = $('ul').append(
     '<h2>' + titleInput.val() + '</h2>' +
     '<img>' +
     '<p>' + descriptionInput.val() + '</p>' +
-    '<img>' + 
+    '<img>' +
     '<img>' +
     '<p>' + 'ranking: ' + ideaRanking() + '</p>' +
   '</li>'
