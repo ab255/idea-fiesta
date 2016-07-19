@@ -1,5 +1,5 @@
 
-// create a function that stores added title and body, function that makes dynamic element ('li')
+// create a function that stores added title and body, function that makes dynamic element ('li' li's need to have a h1, p , [delete, uipvote, downvote] buttons, quality)
 // function that removes li
 // function that changes quality
 // function that searches with li's
