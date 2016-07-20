@@ -35,9 +35,42 @@ h1 {
   border: none;
   color: #fff;
   font-size: 1.25em;
-  width: 30.5em;
+  width: 30.6em;
   margin-bottom: 1em;
   padding: .2em;
+}
+
+section {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+section input {
+  font-size: 1.25em;
+  margin: 1em;
+  padding: .1em 0 .1em .5em;
+  width: 30em;
+}
+
+li {
+  border-bottom: .1em solid #d1d3d4;
+  display: flex;
+  width: 30em;
+  flex-wrap: wrap;
+}
+
+h2 {
+  color: #6d6e71;
+  font: 2.5em "Roboto Slab"
+}
+
+li p {
+  color: #939598;
+}
+
+.delete-button {
 }
 
 @media (max-width: 700px) {
