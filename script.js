@@ -17,28 +17,9 @@ var ideas = [
   }
 ];
 var ideasJson = JSON.stringify(ideas);
-// var qualityOutput = $('.quality-value');
-// var current = 0;
-// var ranking = ["Swill", "Plausible", "Genius"];
 
-saveButton.on('click', function(){
-  $('ul').append(
-    '<li>' +
-      '<h2 class="idea-title">' + titleInput.val() + '</h2>' +
-      '<button class="delete-button" type=button></button>' +
-      '<p class="idea-description">' + descriptionInput.val() + '</p>' +
-      '<button class="upvote-button" type=button>Upvote</button>' +
-      '<button class="downvote-button" type=button></button>' +
-      '<p class="quality-value">' + 'ranking: ' + x[i] + '</p>' +
-    '</li>');
-});
-
-// Function for ideas
-
-function renderIdeasToDom() {
-  var parsedIdeas = parseIdeasJson();
-
-  parsedIdeas.forEach(renderTheIdea);
+function parseIdeasJson() {
+  return JSON.parse(ideasJson);
 };
 
 function renderTheIdea(item, index) {
@@ -53,9 +34,11 @@ function renderTheIdea(item, index) {
     '</li>');
 };
 
-function parseIdeasJson() {
-  return JSON.parse(ideasJson);
+function renderIdeasToDom() {
+  var parsedIdeas = parseIdeasJson();
+  parsedIdeas.forEach(renderTheIdea);
 };
+
 
 function addIdeaToIdeasJson() {
   var newIdea = {
@@ -63,12 +46,25 @@ function addIdeaToIdeasJson() {
     'description': 'awesome idea',
     'quality': 'superb'
   }
-
-  // YOU WILL WANT TO USE THE LOCAL STORAGE JSON FUNCTION HERE, NOT MY CRAP!
+// YOU WILL WANT TO USE THE LOCAL STORAGE JSON FUNCTION HERE, NOT MY CRAP!
   var currentIdeas = parseIdeasJson();
   currentIdeas.push(newIdea);
   ideasJson = JSON.stringify(currentIdeas);
 };
+
+
+saveButton.on('click', function(){
+  $('ul').append(
+    '<li>' +
+      '<h2 class="idea-title">' + titleInput.val() + '</h2>' +
+      '<button class="delete-button" type=button></button>' +
+      '<p class="idea-description">' + descriptionInput.val() + '</p>' +
+      '<button class="upvote-button" type=button>Upvote</button>' +
+      '<button class="downvote-button" type=button></button>' +
+      '<p class="quality-value">' + 'ranking: ' + x[i] + '</p>' +
+    '</li>');
+});
+
 
 // function that removes li
 
@@ -84,6 +80,12 @@ $('ul').on('click', '.upvote-button', function() {
   i = (i+1)%x.length;
   qualityOutput.replaceWith('<p class="quality-value">' + 'ranking: ' + x[i] + '</p>');
 });
+
+if (x.length >= 3) {
+  $('.upvote-button').prop('disabled', true);
+} else {
+  $('.upvote-button').prop('disabled', false);
+}
 
 
 // function that searches with li's
