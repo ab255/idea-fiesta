@@ -4,18 +4,34 @@ var descriptionInput = $('.description-input-js');
 var saveButton = $('.save-button');
 var i = 0;
 var x = ['Swill', 'Plausible', 'Genius'];
-var ideas = [
-  {
-    'title': 'Erics idea',
-    'description': 'great idea',
-    'quality': 'superb'
-  },
-  {
-    'title': 'Bens idea',
-    'description': 'good idea',
-    'quality': 'plausible'
-  }
-];
+var uniqueId = Date.now();
+var ideas = [];
+
+// function generateIdea(titleInput, descriptionInput, uniqueId) {
+//   this.titleInput= titleInput;
+//   this.descriptionInput = descriptionInput;
+//   this.uniqueId = uniqueId;
+// }
+
+
+function Idea(title, body, quality) {
+  this.title = title;
+  this.body = body;
+  this.quality = quality;
+  this.id = Date.now()
+}
+
+function createNewIdea() {
+  var title = titleInput.val();
+  var body = descriptionInput.val();
+  var createANewIdea = new Idea(title, body);
+  ideas.push(createANewIdea);
+}
+
+
+
+///////
+
 var ideasJson = JSON.stringify(ideas);
 
 function parseIdeasJson() {
@@ -42,9 +58,6 @@ function renderIdeasToDom() {
 
 function addIdeaToIdeasJson() {
   var newIdea = {
-    'title': 'new idea',
-    'description': 'awesome idea',
-    'quality': 'superb'
   }
 // YOU WILL WANT TO USE THE LOCAL STORAGE JSON FUNCTION HERE, NOT MY CRAP!
   var currentIdeas = parseIdeasJson();
@@ -52,6 +65,7 @@ function addIdeaToIdeasJson() {
   ideasJson = JSON.stringify(currentIdeas);
 };
 
+////
 
 saveButton.on('click', function(){
   $('ul').append(
@@ -60,9 +74,10 @@ saveButton.on('click', function(){
       '<button class="delete-button" type=button></button>' +
       '<p class="idea-description">' + descriptionInput.val() + '</p>' +
       '<button class="upvote-button" type=button>Upvote</button>' +
-      '<button class="downvote-button" type=button></button>' +
+      '<button class="downvote-button" type=button>Downvote</button>' +
       '<p class="quality-value">' + 'ranking: ' + x[i] + '</p>' +
     '</li>');
+      createNewIdea();
 });
 
 
@@ -70,27 +85,44 @@ saveButton.on('click', function(){
 
 $('ul').on('click', '.delete-button', function() {
   $(this).parent().remove('li');
+
 });
 
+  // var qualityOutput = "swill"
+  // var index = x.indexOf(qualityOutput)
+  // if index < 2
+  //   newQuality = x[index++]
+  // on click, if quality index = 0, add 1
+  // if quality index = 2, do nothing
 
 // function that changes quality
 
 $('ul').on('click', '.upvote-button', function() {
   var qualityOutput = $('.quality-value');
-  i = (i+1)%x.length;
-  qualityOutput.replaceWith('<p class="quality-value">' + 'ranking: ' + x[i] + '</p>');
+  if (i < 2) {
+    i = (i+1);
+    qualityOutput.replaceWith('<p class="quality-value">' + 'ranking: ' + x[i] + '</p>');
+  }
+  // if (i == 2) {
+  //     $('.upvote-button').prop('disabled', true);
+  //   }
 });
 
-if (x.length >= 3) {
-  $('.upvote-button').prop('disabled', true);
-} else {
-  $('.upvote-button').prop('disabled', false);
-}
+$('ul').on('click', '.downvote-button', function() {
+  var qualityOutput = $('.quality-value');
+  if (i > 0) {
+    i = (i-1);
+    qualityOutput.replaceWith('<p class="quality-value">' + 'ranking: ' + x[i] + '</p>');
+  }
+  // if (i == 0) {
+  //   $('.downvote-button').prop('disabled', true);
+  // }
+});
 
+// var currentQuality = $('.value').text(thing)
 
-// function that searches with li's
-// function to be able to edit li's
-// function that replaces edited li
-// function to local store and remove li's
-// Create new function or add to other function, to call on stored li's
-// functions for buttons that will refrence previous buttons
+// var downVoteQualities = {
+//   "Genius" : "Plausible",
+//   "Plausible" : "Swill",
+//   "Swill" : "Swill"
+// }
