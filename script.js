@@ -8,10 +8,10 @@ saveButton.on('click', function(){
   $('ul').append(
     '<li>' +
       '<h2 class="idea-title">' + titleInput.val() + '</h2>' +
-      '<input class="delete-button" type="image" src="images/delete.svg" height="20" width="20"' +
+      '<button class="delete-button" type=button></button>' +
       '<p class="idea-description">' + descriptionInput.val() + '</p>' +
-      '<input class="upvote-button" type="image" src="images/upvote.svg" height="20" width="20">' +
-      '<input class="downvote-button" type="image" src="images/downvote.svg" height="20" width="20"' +
+      '<button class="upvote-button" type=button></button>' +
+      '<button class="downvote-button" type=button></button>' +
       '<p class="quality-value">' + 'ranking: swill' + '</p>' +
     '</li>');
 });
