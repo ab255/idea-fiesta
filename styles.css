@@ -1,2 +1,45 @@
 /*work on layour of page first*/
 /*work on layout of dynamic li's once we can create elements*/
+body {
+  box-sizing: border-box;
+  font-family: "Open Sans";
+}
+
+header {
+  align-items: center;
+  background: #e5f3f2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+h1 {
+  color: #6d6e71;
+  font: 4em "Roboto Slab";
+  margin: .4em 0;
+}
+
+.idea-title-color {
+  color: #00a79d;
+}
+
+.header-input {
+  font-size: 1.25em;
+  width: 30em;
+  margin-bottom: .5em;
+  padding: .1em 0 .1em .5em;
+}
+
+.save-button {
+  background: #00a79d;
+  border: none;
+  color: #fff;
+  font-size: 1.25em;
+  width: 30.5em;
+  margin-bottom: 1em;
+  padding: .2em;
+}
+
+@media (max-width: 700px) {
+
+}
