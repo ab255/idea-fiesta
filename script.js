@@ -2,7 +2,11 @@
 var titleInput = $('.title-input-js');
 var descriptionInput = $('.description-input-js');
 var saveButton = $('.save-button');
-
+var i = 0;
+var x = ['Swill', 'Plausible', 'Genius'];
+// var qualityOutput = $('.quality-value');
+// var current = 0;
+// var ranking = ["Swill", "Plausible", "Genius"];
 
 saveButton.on('click', function(){
   $('ul').append(
@@ -10,9 +14,9 @@ saveButton.on('click', function(){
       '<h2 class="idea-title">' + titleInput.val() + '</h2>' +
       '<button class="delete-button" type=button></button>' +
       '<p class="idea-description">' + descriptionInput.val() + '</p>' +
-      '<button class="upvote-button" type=button></button>' +
+      '<button class="upvote-button" type=button>Upvote</button>' +
       '<button class="downvote-button" type=button></button>' +
-      '<p class="quality-value">' + 'ranking: swill' + '</p>' +
+      '<p class="quality-value">' + 'ranking: ' + x[i] + '</p>' +
     '</li>');
 });
 
@@ -25,6 +29,12 @@ $('ul').on('click', '.delete-button', function() {
 
 
 // function that changes quality
+
+$('ul').on('click', '.upvote-button', function() {
+  var qualityOutput = $('.quality-value');
+  i = (i+1)%x.length;
+  qualityOutput.replaceWith('<p class="quality-value">' + 'ranking: ' + x[i] + '</p>');
+});
 
 
 // function that searches with li's
