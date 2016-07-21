@@ -41,12 +41,16 @@ function parseIdeasJson() {
 function renderTheIdea(item, index) {
   $('ul').append(
     '<li>' +
+      '<section class="li-header">' +
       '<h2 class="idea-title">' + item['title'] + '</h2>' +
       '<button class="delete-button" type=button></button>' +
+      '</section>' +
       '<p class="idea-description">' + item['description'] + '</p>' +
+      '<section class="li-footer"'> +
       '<button class="upvote-button" type=button>Upvote</button>' +
       '<button class="downvote-button" type=button></button>' +
       '<p class="quality-value">' + 'ranking: ' + item['quality'] + '</p>' +
+      '</section>' +
     '</li>');
 };
 
@@ -70,12 +74,16 @@ function addIdeaToIdeasJson() {
 saveButton.on('click', function(){
   $('ul').append(
     '<li>' +
-      '<h2 class="idea-title">' + titleInput.val() + '</h2>' +
-      '<button class="delete-button" type=button></button>' +
-      '<p class="idea-description">' + descriptionInput.val() + '</p>' +
-      '<button class="upvote-button" type=button>Upvote</button>' +
-      '<button class="downvote-button" type=button>Downvote</button>' +
-      '<p class="quality-value">' + 'ranking: ' + x[i] + '</p>' +
+      '<section class="li-header">' +
+        '<h2 class="idea-title">' + titleInput.val() + '</h2>' +
+        '<button class="delete-button" type=button></button>' +
+      '</section>' +
+        '<p class="idea-description">' + descriptionInput.val() + '</p>' +
+      '<section class="li-footer">' +
+        '<button class="upvote-button" type=button></button>' +
+        '<button class="downvote-button" type=button></button>' +
+        '<p class="quality-value">' + 'ranking: ' + x[i] + '</p>' +
+      '</section>' +
     '</li>');
       createNewIdea();
 });
@@ -84,7 +92,7 @@ saveButton.on('click', function(){
 // function that removes li
 
 $('ul').on('click', '.delete-button', function() {
-  $(this).parent().remove('li');
+  $(this).parent().parent().remove('li');
 
 });
 
