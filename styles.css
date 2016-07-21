@@ -56,21 +56,67 @@ section input {
 
 li {
   border-bottom: .1em solid #d1d3d4;
+  width: 38em;
+}
+
+.li-header {
   display: flex;
-  width: 30em;
-  flex-wrap: wrap;
+  flex-direction: row;
+  margin-bottom: .5em;
+}
+
+.li-footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  margin: 1em 0;
 }
 
 h2 {
   color: #6d6e71;
-  font: 2.5em "Roboto Slab"
+  font: 2.2em "Roboto Slab";
+  flex: 10;
 }
 
 li p {
   color: #939598;
+  overflow-wrap: break-word;
+}
+
+li button {
+  border: none;
+  height: 2em;
+  width: 2em;
+  background-color: transparent;
 }
 
 .delete-button {
+  background-image: url(images/delete.svg);
+  outline: none;
+}
+
+.delete-button:hover {
+  background-image: url(images/delete-hover.svg);
+}
+
+.upvote-button {
+  background-image: url(images/upvote.svg);
+  margin-right: .5em;
+  outline: none;
+}
+
+.upvote-button:hover {
+  background-image: url(images/upvote-hover.svg);
+}
+
+.downvote-button {
+  background-image: url(images/downvote.svg);
+  margin-right: .5em;
+  outline: none;
+}
+
+.downvote-button:hover {
+  background-image: url(images/downvote-hover.svg);
 }
 
 @media (max-width: 700px) {
