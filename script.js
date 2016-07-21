@@ -4,38 +4,35 @@ var descriptionInput = $('.description-input-js');
 var saveButton = $('.save-button');
 var i = 0;
 var x = ['Swill', 'Plausible', 'Genius'];
-var uniqueId = Date.now();
 var ideas = [];
 
-// function generateIdea(titleInput, descriptionInput, uniqueId) {
-//   this.titleInput= titleInput;
-//   this.descriptionInput = descriptionInput;
-//   this.uniqueId = uniqueId;
-// }
 
-
-function Idea(title, body, quality) {
+function Idea(title, body, quality, id) {
   this.title = title;
   this.body = body;
   this.quality = quality;
   this.id = Date.now()
-}
+};
 
 function createNewIdea() {
   var title = titleInput.val();
   var body = descriptionInput.val();
   var createANewIdea = new Idea(title, body);
   ideas.push(createANewIdea);
-}
+};
 
+/////
 
+var ideasWeHaveRetrieved = retrieveIdeas();
+var strungIdeas = JSON.stringify(ideas);
 
-///////
+function storeIdeas() {
+  localStorage.setItem('ideas', strungIdeas);
+};
 
-var ideasJson = JSON.stringify(ideas);
-
-function parseIdeasJson() {
-  return JSON.parse(ideasJson);
+function retrieveIdeas() {
+  var theIdeasThatWereRetreived = localStorage.getItem('ideas');
+  JSON.parse(theIdeasThatWereRetreived);
 };
 
 function renderTheIdea(item, index) {
@@ -54,20 +51,54 @@ function renderTheIdea(item, index) {
     '</li>');
 };
 
-function renderIdeasToDom() {
-  var parsedIdeas = parseIdeasJson();
-  parsedIdeas.forEach(renderTheIdea);
+function renderIdeasToPage() {
+  ideasWeHaveRetrieved.forEach(renderTheIdea);
 };
 
+function addNewIdeaToThePage() {
+  var spawnedIdea = new Idea(title, body, quality, id);
+  ideasWeHaveRetrieved.push(spawnedIdea);
+  strungIdeas = JSON.stringify(spawnedIdea);
+}
 
-function addIdeaToIdeasJson() {
-  var newIdea = {
-  }
-// YOU WILL WANT TO USE THE LOCAL STORAGE JSON FUNCTION HERE, NOT MY CRAP!
-  var currentIdeas = parseIdeasJson();
-  currentIdeas.push(newIdea);
-  ideasJson = JSON.stringify(currentIdeas);
-};
+///////
+
+// var ideasJson = JSON.stringify(ideas);
+//
+// function parseIdeasJson() {
+//   return JSON.parse(ideasJson);
+// };
+//
+// function renderTheIdea(item, index) {
+//   $('ul').append(
+//     '<li>' +
+//       '<section class="li-header">' +
+//       '<h2 class="idea-title">' + item['title'] + '</h2>' +
+//       '<button class="delete-button" type=button></button>' +
+//       '</section>' +
+//       '<p class="idea-description">' + item['description'] + '</p>' +
+//       '<section class="li-footer"'> +
+//       '<button class="upvote-button" type=button>Upvote</button>' +
+//       '<button class="downvote-button" type=button></button>' +
+//       '<p class="quality-value">' + 'ranking: ' + item['quality'] + '</p>' +
+//       '</section>' +
+//     '</li>');
+// };
+//
+// function renderIdeasToDom() {
+//   var parsedIdeas = parseIdeasJson();
+//   parsedIdeas.forEach(renderTheIdea);
+// };
+//
+//
+// function addIdeaToIdeasJson() {
+//   var newIdea = {
+//   }
+// // YOU WILL WANT TO USE THE LOCAL STORAGE JSON FUNCTION HERE, NOT MY CRAP!
+//   var currentIdeas = parseIdeasJson();
+//   currentIdeas.push(newIdea);
+//   ideasJson = JSON.stringify(currentIdeas);
+// };
 
 ////
 

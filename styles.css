@@ -119,6 +119,10 @@ li button {
   background-image: url(images/downvote-hover.svg);
 }
 
+.quality-value {
+  color: #6d6e71;
+}
+
 @media (max-width: 700px) {
 
 }
