@@ -6,19 +6,24 @@ var i = 0;
 var x = ['Swill', 'Plausible', 'Genius'];
 var ideas = [];
 
+$(document).ready(function(){
+  renderIdeas();
+});
 
 function Idea(title, body, quality, id) {
   this.title = title;
   this.body = body;
   this.quality = quality;
-  this.id = Date.now()
+  this.id = Date.now();
 };
 
 function createNewIdea() {
   var title = titleInput.val();
-  var body = descriptionInput.val();
-  var createANewIdea = new Idea(title, body);
-  ideas.push(createANewIdea);
+  var description = descriptionInput.val();
+  var id = Date.now();
+  var details = JSON.stringify({'id': id, 'title': title, 'description': description, 'quality': 'Swill'});
+  localStorage.setItem(id, details);
+
 };
 
 /////
@@ -35,18 +40,33 @@ function retrieveIdeas() {
   JSON.parse(theIdeasThatWereRetreived);
 };
 
-function renderTheIdea(item, index) {
-  $('ul').append(
-    '<li>' +
+function clearIdeas() {
+  $('ul').empty();
+}
+
+function renderIdeas() {
+  for (var i in window.localStorage){
+    var idea = JSON.parse(localStorage.getItem(i));
+    var title = idea['title'];
+    var description = idea['description'];
+    var quality = idea['quality'];
+    var id = idea['id'];
+    renderTheIdea(id, title, description, quality);
+  }
+}
+
+function renderTheIdea(id, title, description, quality) {
+  $('ul').prepend(
+    '<li id='+ id + '>' +
       '<section class="li-header">' +
-      '<h2 class="idea-title">' + item['title'] + '</h2>' +
+      '<h2 class="idea-title">' + title + '</h2>' +
       '<button class="delete-button" type=button></button>' +
       '</section>' +
-      '<p class="idea-description">' + item['description'] + '</p>' +
-      '<section class="li-footer"'> +
-      '<button class="upvote-button" type=button>Upvote</button>' +
+      '<p class="idea-description">' + description + '</p>' +
+      '<section class="li-footer">' +
+      '<button class="upvote-button" type=button></button>' +
       '<button class="downvote-button" type=button></button>' +
-      '<p class="quality-value">' + 'ranking: ' + item['quality'] + '</p>' +
+      '<p class="quality-value">' + 'ranking: ' + quality + '</p>' +
       '</section>' +
     '</li>');
 };
@@ -61,63 +81,13 @@ function addNewIdeaToThePage() {
   strungIdeas = JSON.stringify(spawnedIdea);
 }
 
-///////
-
-// var ideasJson = JSON.stringify(ideas);
-//
-// function parseIdeasJson() {
-//   return JSON.parse(ideasJson);
-// };
-//
-// function renderTheIdea(item, index) {
-//   $('ul').append(
-//     '<li>' +
-//       '<section class="li-header">' +
-//       '<h2 class="idea-title">' + item['title'] + '</h2>' +
-//       '<button class="delete-button" type=button></button>' +
-//       '</section>' +
-//       '<p class="idea-description">' + item['description'] + '</p>' +
-//       '<section class="li-footer"'> +
-//       '<button class="upvote-button" type=button>Upvote</button>' +
-//       '<button class="downvote-button" type=button></button>' +
-//       '<p class="quality-value">' + 'ranking: ' + item['quality'] + '</p>' +
-//       '</section>' +
-//     '</li>');
-// };
-//
-// function renderIdeasToDom() {
-//   var parsedIdeas = parseIdeasJson();
-//   parsedIdeas.forEach(renderTheIdea);
-// };
-//
-//
-// function addIdeaToIdeasJson() {
-//   var newIdea = {
-//   }
-// // YOU WILL WANT TO USE THE LOCAL STORAGE JSON FUNCTION HERE, NOT MY CRAP!
-//   var currentIdeas = parseIdeasJson();
-//   currentIdeas.push(newIdea);
-//   ideasJson = JSON.stringify(currentIdeas);
-// };
-
-////
 
 saveButton.on('click', function(){
-  $('ul').append(
-    '<li>' +
-      '<section class="li-header">' +
-        '<h2 class="idea-title">' + titleInput.val() + '</h2>' +
-        '<button class="delete-button" type=button></button>' +
-      '</section>' +
-        '<p class="idea-description">' + descriptionInput.val() + '</p>' +
-      '<section class="li-footer">' +
-        '<button class="upvote-button" type=button></button>' +
-        '<button class="downvote-button" type=button></button>' +
-        '<p class="quality-value">' + 'ranking: ' + x[i] + '</p>' +
-      '</section>' +
-    '</li>');
-      createNewIdea();
+  createNewIdea();
+  clearIdeas();
+  renderIdeas();
 });
+
 
 
 // function that removes li
