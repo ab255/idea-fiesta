@@ -14,14 +14,16 @@ function Idea(title, body, quality, id) {
   this.title = title;
   this.body = body;
   this.quality = quality;
-  this.id = Date.now()
+  this.id = Date.now();
 };
 
 function createNewIdea() {
   var title = titleInput.val();
   var description = descriptionInput.val();
-  var details = JSON.stringify({'title': title, 'description': description, 'quality': 'Swill'});
-  localStorage.setItem(title, details);
+  var id = Date.now();
+  var details = JSON.stringify({'id': id, 'title': title, 'description': description, 'quality': 'Swill'});
+  localStorage.setItem(id, details);
+
 };
 
 /////
@@ -46,15 +48,16 @@ function renderIdeas() {
   for (var i in window.localStorage){
     var idea = JSON.parse(localStorage.getItem(i));
     var title = idea['title'];
-    var description = idea['body'];
+    var description = idea['description'];
     var quality = idea['quality'];
-    renderTheIdea(title, description, quality);
+    var id = idea['id'];
+    renderTheIdea(id, title, description, quality);
   }
 }
 
-function renderTheIdea(title, description, quality) {
-  $('ul').append(
-    '<li>' +
+function renderTheIdea(id, title, description, quality) {
+  $('ul').prepend(
+    '<li id='+ id + '>' +
       '<section class="li-header">' +
       '<h2 class="idea-title">' + title + '</h2>' +
       '<button class="delete-button" type=button></button>' +
