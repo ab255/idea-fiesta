@@ -2,7 +2,7 @@ var titleInput = $('.title-input-js');
 var descriptionInput = $('.description-input-js');
 var saveButton = $('.save-button');
 var i = 0;
-var x = ['Swill', 'Plausible', 'Genius'];
+var qualityValue = ['Swill', 'Plausible', 'Genius'];
 
 $(document).ready(function(){
   renderIdeas();
@@ -14,7 +14,6 @@ function createNewIdea() {
   var id = Date.now();
   var details = JSON.stringify({'id': id, 'title': title, 'description': description, 'quality': 'Swill'});
   localStorage.setItem(id, details);
-
 };
 
 function clearIdeas() {
@@ -48,9 +47,6 @@ function renderTheIdea(id, title, description, quality) {
     '</li>');
 };
 
-function destroyIdea( {
-  localStorage.removeIdea(id);
-})
 
 saveButton.on('click', function(){
   createNewIdea();
@@ -58,18 +54,23 @@ saveButton.on('click', function(){
   renderIdeas();
 });
 
-$('ul').on('click', '.delete-button', function() {
-  $(this).parent().parent().remove('li');
-  destroyIdea();
-  clearIdeas();
-  renderIdeas();
-});
+// $('ul').on('click', '.delete-button', function() {
+//   $(this).parent().parent().remove('li');
+//   clearIdeas();
+//   renderIdeas();
+// });
+
+$('ul').on('click', '.delete-button', function () {
+    var id = parseInt(this.closest('li').id);
+    localStorage.removeItem(id);
+    $(this).parent().parent().remove('li');
+  });
 
 $('ul').on('click', '.upvote-button', function() {
   var qualityOutput = $('.quality-value');
   if (i < 2) {
     i = (i+1);
-    qualityOutput.replaceWith('<p class="quality-value">' + 'ranking: ' + x[i] + '</p>');
+    qualityOutput.replaceWith('<p class="quality-value">' + 'ranking: ' + qualityValue[i] + '</p>');
   }
   // if (i == 2) {
   //     $('.upvote-button').prop('disabled', true);
@@ -80,7 +81,7 @@ $('ul').on('click', '.downvote-button', function() {
   var qualityOutput = $('.quality-value');
   if (i > 0) {
     i = (i-1);
-    qualityOutput.replaceWith('<p class="quality-value">' + 'ranking: ' + x[i] + '</p>');
+    qualityOutput.replaceWith('<p class="quality-value">' + 'ranking: ' + qualityValue[i] + '</p>');
   }
   // if (i == 0) {
   //   $('.downvote-button').prop('disabled', true);
