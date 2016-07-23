@@ -48,6 +48,10 @@ function renderTheIdea(id, title, description, quality) {
     '</li>');
 };
 
+function destroyIdea( {
+  localStorage.removeIdea(id);
+})
+
 saveButton.on('click', function(){
   createNewIdea();
   clearIdeas();
@@ -56,7 +60,9 @@ saveButton.on('click', function(){
 
 $('ul').on('click', '.delete-button', function() {
   $(this).parent().parent().remove('li');
-
+  destroyIdea();
+  clearIdeas();
+  renderIdeas();
 });
 
 $('ul').on('click', '.upvote-button', function() {
