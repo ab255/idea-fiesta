@@ -1,21 +1,12 @@
-// create a function that stores added title and body, function that makes dynamic element ('li' li's need to have a h1, p , [delete, uipvote, downvote] buttons, quality)
 var titleInput = $('.title-input-js');
 var descriptionInput = $('.description-input-js');
 var saveButton = $('.save-button');
 var i = 0;
 var x = ['Swill', 'Plausible', 'Genius'];
-var ideas = [];
 
 $(document).ready(function(){
   renderIdeas();
 });
-
-function Idea(title, body, quality, id) {
-  this.title = title;
-  this.body = body;
-  this.quality = quality;
-  this.id = Date.now();
-};
 
 function createNewIdea() {
   var title = titleInput.val();
@@ -24,20 +15,6 @@ function createNewIdea() {
   var details = JSON.stringify({'id': id, 'title': title, 'description': description, 'quality': 'Swill'});
   localStorage.setItem(id, details);
 
-};
-
-/////
-
-var ideasWeHaveRetrieved = retrieveIdeas();
-var strungIdeas = JSON.stringify(ideas);
-
-function storeIdeas() {
-  localStorage.setItem('ideas', strungIdeas);
-};
-
-function retrieveIdeas() {
-  var theIdeasThatWereRetreived = localStorage.getItem('ideas');
-  JSON.parse(theIdeasThatWereRetreived);
 };
 
 function clearIdeas() {
@@ -71,40 +48,16 @@ function renderTheIdea(id, title, description, quality) {
     '</li>');
 };
 
-function renderIdeasToPage() {
-  ideasWeHaveRetrieved.forEach(renderTheIdea);
-};
-
-function addNewIdeaToThePage() {
-  var spawnedIdea = new Idea(title, body, quality, id);
-  ideasWeHaveRetrieved.push(spawnedIdea);
-  strungIdeas = JSON.stringify(spawnedIdea);
-}
-
-
 saveButton.on('click', function(){
   createNewIdea();
   clearIdeas();
   renderIdeas();
 });
 
-
-
-// function that removes li
-
 $('ul').on('click', '.delete-button', function() {
   $(this).parent().parent().remove('li');
 
 });
-
-  // var qualityOutput = "swill"
-  // var index = x.indexOf(qualityOutput)
-  // if index < 2
-  //   newQuality = x[index++]
-  // on click, if quality index = 0, add 1
-  // if quality index = 2, do nothing
-
-// function that changes quality
 
 $('ul').on('click', '.upvote-button', function() {
   var qualityOutput = $('.quality-value');
@@ -128,10 +81,10 @@ $('ul').on('click', '.downvote-button', function() {
   // }
 });
 
-// var currentQuality = $('.value').text(thing)
-
-// var downVoteQualities = {
-//   "Genius" : "Plausible",
-//   "Plausible" : "Swill",
-//   "Swill" : "Swill"
-// }
+$('#search-bar').keyup(function(){
+   var valThis = $(this).val().toLowerCase();
+    $('li').each(function(){
+     var text = $(this).text().toLowerCase();
+        (text.indexOf(valThis) == 0) ? $(this).show() : $(this).hide();
+   });
+  });
