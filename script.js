@@ -17,6 +17,11 @@ function createNewIdea() {
   localStorage.setItem(id, details);
 };
 
+function clearInputs() {
+  titleInput.val('');
+  descriptionInput.val('');
+}
+
 function clearIdeas() {
   $('ul').empty();
 }
@@ -53,6 +58,7 @@ saveButton.on('click', function () {
   createNewIdea();
   clearIdeas();
   renderIdeas();
+  clearInputs();
 });
 
 
