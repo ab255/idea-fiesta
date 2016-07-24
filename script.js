@@ -12,7 +12,8 @@ function createNewIdea() {
   var title = titleInput.val();
   var description = descriptionInput.val();
   var id = Date.now();
-  var details = JSON.stringify({'id': id, 'title': title, 'description': description, 'quality': 'Swill'});
+  var quality = this.quality;
+  var details = JSON.stringify({'id': id, 'title': title, 'description': description, 'quality': 'ranking: Swill'});
   localStorage.setItem(id, details);
 };
 
@@ -42,7 +43,7 @@ function renderTheIdea(id, title, description, quality) {
       '<section class="li-footer">' +
       '<button class="upvote-button" type=button></button>' +
       '<button class="downvote-button" type=button></button>' +
-      '<p class="quality-value">' + 'ranking: ' + quality + '</p>' +
+      '<p class="quality-value">' + quality + '</p>' +
       '</section>' +
     '</li>');
 };
@@ -54,11 +55,7 @@ saveButton.on('click', function(){
   renderIdeas();
 });
 
-// $('ul').on('click', '.delete-button', function() {
-//   $(this).parent().parent().remove('li');
-//   clearIdeas();
-//   renderIdeas();
-// });
+
 
 $('ul').on('click', '.delete-button', function () {
     var id = parseInt(this.closest('li').id);
@@ -66,15 +63,20 @@ $('ul').on('click', '.delete-button', function () {
     $(this).parent().parent().remove('li');
   });
 
+
 $('ul').on('click', '.upvote-button', function() {
   var qualityOutput = $('.quality-value');
   if (i < 2) {
     i = (i+1);
     qualityOutput.replaceWith('<p class="quality-value">' + 'ranking: ' + qualityValue[i] + '</p>');
   }
-  // if (i == 2) {
-  //     $('.upvote-button').prop('disabled', true);
-  //   }
+
+  var id = parseInt(this.closest('li').id);
+  var title = $(this).parent().parent('li').find('.idea-title').text();
+  var description = $(this).parent().parent('li').find('.idea-description').text();
+  var quality = $(this).parent().parent('li').find('.quality-value').text();
+  var details = JSON.stringify({'id': id, 'title': title, 'description': description, 'quality': quality});
+  localStorage.setItem(id, details);
 });
 
 $('ul').on('click', '.downvote-button', function() {
@@ -83,9 +85,13 @@ $('ul').on('click', '.downvote-button', function() {
     i = (i-1);
     qualityOutput.replaceWith('<p class="quality-value">' + 'ranking: ' + qualityValue[i] + '</p>');
   }
-  // if (i == 0) {
-  //   $('.downvote-button').prop('disabled', true);
-  // }
+
+  var id = parseInt(this.closest('li').id);
+  var title = $(this).parent().parent('li').find('.idea-title').text();
+  var description = $(this).parent().parent('li').find('.idea-description').text();
+  var quality = $(this).parent().parent('li').find('.quality-value').text();
+  var details = JSON.stringify({'id': id, 'title': title, 'description': description, 'quality': quality});
+  localStorage.setItem(id, details);
 });
 
 $('#search-bar').keyup(function(){
