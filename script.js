@@ -13,7 +13,7 @@ function createNewIdea() {
   var description = descriptionInput.val();
   var id = Date.now();
   var quality = this.quality;
-  var details = JSON.stringify({'id': id, 'title': title, 'description': description, 'quality': 'ranking: Swill'});
+  var details = JSON.stringify({'id': id, 'title': title, 'description': description, 'quality': qualityValue[i]});
   localStorage.setItem(id, details);
 };
 
@@ -43,14 +43,13 @@ function renderTheIdea(id, title, description, quality) {
       '<section class="li-footer">' +
       '<button class="upvote-button" type=button></button>' +
       '<button class="downvote-button" type=button></button>' +
-      '<p class="quality-value">' + quality + '</p>' +
-      '<button class="edit-button" type="button"></button>' +
+      '<p class="ranking">' + 'Ranking:' + '<span class="quality-value">' + quality + '</span>' + '</p>' +
       '</section>' +
     '</li>');
 };
 
 
-saveButton.on('click', function(){
+saveButton.on('click', function () {
   createNewIdea();
   clearIdeas();
   renderIdeas();
@@ -65,11 +64,11 @@ $('ul').on('click', '.delete-button', function () {
   });
 
 
-$('ul').on('click', '.upvote-button', function() {
+$('ul').on('click', '.upvote-button', function () {
   var qualityOutput = $('.quality-value');
   if (i < 2) {
     i = (i+1);
-    qualityOutput.replaceWith('<p class="quality-value">' + 'ranking: ' + qualityValue[i] + '</p>');
+    qualityOutput.replaceWith('<span class="quality-value">' + qualityValue[i] + '</span>');
   }
 
   var id = parseInt(this.closest('li').id);
@@ -84,7 +83,7 @@ $('ul').on('click', '.downvote-button', function() {
   var qualityOutput = $('.quality-value');
   if (i > 0) {
     i = (i-1);
-    qualityOutput.replaceWith('<p class="quality-value">' + 'ranking: ' + qualityValue[i] + '</p>');
+    qualityOutput.replaceWith('<span class="quality-value">' + qualityValue[i] + '</span>');
   }
 
   var id = parseInt(this.closest('li').id);
@@ -95,13 +94,31 @@ $('ul').on('click', '.downvote-button', function() {
   localStorage.setItem(id, details);
 });
 
-jQuery('#search-bar').keyup(function () {
-    var filter = jQuery(this).val();
-    jQuery('li').each(function () {
-        if (jQuery(this).text().search(new RegExp(filter, 'i')) < 0) {
-            jQuery(this).hide();
+$('#search-bar').keyup(function () {
+    var filter = $(this).val();
+    $('li').each(function () {
+        if ($(this).text().search(new RegExp(filter, 'i')) < 0) {
+            $(this).hide();
         } else {
-            jQuery(this).show()
+            $(this).show()
         }
     });
 });
+
+$('').keyup(function () {
+  updateIdeas();
+})
+
+function updateIdea() {
+  var editedIdea = $(this).closest('id');
+  var editedId = parseInt(editedIdea.attr('id'));
+  var editedTitle = editedIdea.find('h2.editable').text();
+  var editedDescription = editedIdea.find('p.editable').text();
+  var editedQuality = editedIdea.find('.quality-in-DOM').text();
+  // deleteIdeaFromStorage(editedId);
+  var editedIdea = new id(editedId, editedTitle, editedDescription, editedQuality);
+  renderIdeas();
+  // var currentIdeas = getIdeas();
+  // currentIdeas.push(editedIdea);
+  // localStorage.setItem("ideas", JSON.stringify(currentIdeas));
+};

@@ -120,21 +120,43 @@ li button {
   background-image: url(images/downvote-hover.svg);
 }
 
-.quality-value {
+.ranking {
   color: #6d6e71;
   flex: 5;
+  font-family: "Roboto Slab";
+  margin-left: .3em;
 }
 
-.edit-button {
-  align-items: flex-end;
-  background-image: url(images/edit.svg);
-  justify-content: flex-end;
-}
-
-.edit-button:hover {
-  background-image: url(images/edit-hover.svg);
+.quality-value {
+  font-family: "Open Sans";
+  margin-left: .3em;
 }
 
 @media (max-width: 700px) {
 
+  h1 {
+    font-size: 2.5em;
+  }
+
+  .header-input {
+    width: 90%;
+  }
+
+  .description-input {
+    height: 6em;
+  }
+
+  .save-button{
+    width: 92.5%;
+  }
+
+  section input {
+    width: 90%;
+  }
+
+  li {
+    display: flex;
+    flex-direction: column;
+    width: 150%;
+  }
 }
