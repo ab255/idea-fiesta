@@ -36,14 +36,15 @@ function renderTheIdea(id, title, description, quality) {
   $('ul').prepend(
     '<li id='+ id + '>' +
       '<section class="li-header">' +
-      '<h2 class="idea-title">' + title + '</h2>' +
+      '<h2 class="idea-title" contenteditable="true">' + title + '</h2>' +
       '<button class="delete-button" type=button></button>' +
       '</section>' +
-      '<p class="idea-description">' + description + '</p>' +
+      '<p class="idea-description" contenteditable="true">' + description + '</p>' +
       '<section class="li-footer">' +
       '<button class="upvote-button" type=button></button>' +
       '<button class="downvote-button" type=button></button>' +
       '<p class="quality-value">' + quality + '</p>' +
+      '<button class="edit-button" type="button"></button>' +
       '</section>' +
     '</li>');
 };
@@ -94,30 +95,13 @@ $('ul').on('click', '.downvote-button', function() {
   localStorage.setItem(id, details);
 });
 
-$('#search-bar').keyup(function(){
-   var valThis = $(this).val().toLowerCase();
-    $('li').each(function(){
-     var text = $(this).text().toLowerCase();
-        (text.indexOf(valThis) == 0) ? $(this).show() : $(this).hide();
-   });
-  });
-
-// $('li').each(function(){
-// $(this).attr('data-search-term', $(this).text().toLowerCase());
-// });
-//
-// $('#search-bar').on('keyup', function(){
-//
-// var searchTerm = $(this).val().toLowerCase();
-//
-//     $('li').each(function(){
-//
-//         if ($(this).filter('[data-search-term *= ' + searchTerm + ']').length > 0 || searchTerm.length < 1) {
-//             $(this).show();
-//         } else {
-//             $(this).hide();
-//         }
-//
-//     });
-//
-// });
+jQuery('#search-bar').keyup(function () {
+    var filter = jQuery(this).val();
+    jQuery('li').each(function () {
+        if (jQuery(this).text().search(new RegExp(filter, 'i')) < 0) {
+            jQuery(this).hide();
+        } else {
+            jQuery(this).show()
+        }
+    });
+});
