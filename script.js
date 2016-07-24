@@ -101,3 +101,23 @@ $('#search-bar').keyup(function(){
         (text.indexOf(valThis) == 0) ? $(this).show() : $(this).hide();
    });
   });
+
+// $('li').each(function(){
+// $(this).attr('data-search-term', $(this).text().toLowerCase());
+// });
+//
+// $('#search-bar').on('keyup', function(){
+//
+// var searchTerm = $(this).val().toLowerCase();
+//
+//     $('li').each(function(){
+//
+//         if ($(this).filter('[data-search-term *= ' + searchTerm + ']').length > 0 || searchTerm.length < 1) {
+//             $(this).show();
+//         } else {
+//             $(this).hide();
+//         }
+//
+//     });
+//
+// });
