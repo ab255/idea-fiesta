@@ -111,20 +111,32 @@ $('#search-bar').keyup(function () {
     });
 });
 
-$('').keyup(function () {
-  updateIdeas();
+$('ul').focusout(function () {
+  updateTitle();
+  clearIdeas();
+  renderIdeas();
 })
 
-function updateIdea() {
-  var editedIdea = $(this).closest('id');
-  var editedId = parseInt(editedIdea.attr('id'));
-  var editedTitle = editedIdea.find('h2.editable').text();
-  var editedDescription = editedIdea.find('p.editable').text();
-  var editedQuality = editedIdea.find('.quality-in-DOM').text();
-  // deleteIdeaFromStorage(editedId);
-  var editedIdea = new id(editedId, editedTitle, editedDescription, editedQuality);
+function updateTitle() {
+  var id = parseInt(this.closest('li').id);
+  var title = $(this).parent().parent('li').find('.idea-title').text();
+  var description = $(this).parent().parent('li').find('.idea-description').text();
+  var quality = $(this).parent().parent('li').find('.quality-value').text();
+  var details = JSON.stringify({'id': id, 'title': title, 'description': description, 'quality': quality});
+  localStorage.setItem(id, details);
+};
+
+$('ul').focusout(function () {
+  updateDescrption();
+  clearIdeas();
   renderIdeas();
-  // var currentIdeas = getIdeas();
-  // currentIdeas.push(editedIdea);
-  // localStorage.setItem("ideas", JSON.stringify(currentIdeas));
+})
+
+function updateTitle() {
+  var id = parseInt(this.closest('li').id);
+  var title = $(this).parent().parent('li').find('.idea-title').text();
+  var description = $(this).parent().parent('li').find('.idea-description').text();
+  var quality = $(this).parent().parent('li').find('.quality-value').text();
+  var details = JSON.stringify({'id': id, 'title': title, 'description': description, 'quality': quality});
+  localStorage.setItem(id, details);
 };
