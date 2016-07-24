@@ -1,8 +1,12 @@
 var titleInput = $('.title-input-js');
 var descriptionInput = $('.description-input-js');
 var saveButton = $('.save-button');
-var i = 0;
 var qualityValue = ['Swill', 'Plausible', 'Genius'];
+var qualityKey = {
+  0: ' Swill',
+  1: ' Plausible',
+  2: ' Genius'
+}
 
 $(document).ready(function(){
   renderIdeas();
@@ -13,7 +17,12 @@ function createNewIdea() {
   var description = descriptionInput.val();
   var id = Date.now();
   var quality = this.quality;
-  var details = JSON.stringify({'id': id, 'title': title, 'description': description, 'quality': qualityValue[i]});
+  var details = JSON.stringify({
+    'id': id, 'title': title,
+    'description': description,
+    'quality': qualityValue[0],
+    'counter': 0
+  });
   localStorage.setItem(id, details);
 };
 
@@ -26,18 +35,20 @@ function clearIdeas() {
   $('ul').empty();
 }
 
-function renderIdeas() {
+function renderIdeas(qualityStuff) {
   for (var i in window.localStorage){
     var idea = JSON.parse(localStorage.getItem(i));
     var title = idea['title'];
     var description = idea['description'];
-    var quality = idea['quality'];
+    var quality = qualityKey[idea['counter']];
     var id = idea['id'];
-    renderTheIdea(id, title, description, quality);
+    var counter = idea['counter'];
+    renderTheIdea(id, title, description, quality, counter);
   }
 }
 
-function renderTheIdea(id, title, description, quality) {
+function renderTheIdea(id, title, description, quality, counter) {
+  debugger;
   $('ul').prepend(
     '<li id='+ id + '>' +
       '<section class="li-header">' +
@@ -46,8 +57,8 @@ function renderTheIdea(id, title, description, quality) {
       '</section>' +
       '<p class="idea-description" contenteditable="true">' + description + '</p>' +
       '<section class="li-footer">' +
-      '<button class="upvote-button" type=button></button>' +
-      '<button class="downvote-button" type=button></button>' +
+      '<button class="upvote-button" type=button data-id=' + counter + '></button>' +
+      '<button class="downvote-button" type=button data-id=' + counter + '></button>' +
       '<p class="ranking">' + 'Ranking:' + '<span class="quality-value">' + quality + '</span>' + '</p>' +
       '</section>' +
     '</li>');
@@ -71,22 +82,35 @@ $('ul').on('click', '.delete-button', function () {
 
 
 $('ul').on('click', '.upvote-button', function () {
-  var qualityOutput = $('.quality-value');
-  if (i < 2) {
-    i = (i+1);
-    qualityOutput.replaceWith('<span class="quality-value">' + qualityValue[i] + '</span>');
+  var qualityOutput = $(this).parent().parent('li').find('.quality-value');
+  debugger;
+  var newCounter = $(this).data("id");
+  if ( newCounter < 2) {
+    newCounter = (newCounter+1);
+    $(this).data('id', newCounter)
+    debugger
+    qualityOutput.replaceWith(
+      '<span class="quality-value">' + qualityKey[`${newCounter}`] + '</span>'
+    );
   }
 
   var id = parseInt(this.closest('li').id);
   var title = $(this).parent().parent('li').find('.idea-title').text();
   var description = $(this).parent().parent('li').find('.idea-description').text();
+  debugger
   var quality = $(this).parent().parent('li').find('.quality-value').text();
-  var details = JSON.stringify({'id': id, 'title': title, 'description': description, 'quality': quality});
+  var details = JSON.stringify({
+    'id': id,
+    'title': title,
+    'description': description,
+    'quality': quality,
+    'counter': newCounter
+  });
   localStorage.setItem(id, details);
 });
 
 $('ul').on('click', '.downvote-button', function() {
-  var qualityOutput = $('.quality-value');
+  var qualityOutput = $(this).parent().parent('li').find('.quality-value');
   if (i > 0) {
     i = (i-1);
     qualityOutput.replaceWith('<span class="quality-value">' + qualityValue[i] + '</span>');
