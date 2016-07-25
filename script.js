@@ -97,7 +97,6 @@ $('ul').on('click', '.upvote-button', function () {
   var id = parseInt(this.closest('li').id);
   var title = $(this).parent().parent('li').find('.idea-title').text();
   var description = $(this).parent().parent('li').find('.idea-description').text();
-  debugger
   var quality = $(this).parent().parent('li').find('.quality-value').text();
   var details = JSON.stringify({
     'id': id,
@@ -111,16 +110,28 @@ $('ul').on('click', '.upvote-button', function () {
 
 $('ul').on('click', '.downvote-button', function() {
   var qualityOutput = $(this).parent().parent('li').find('.quality-value');
-  if (i > 0) {
-    i = (i-1);
-    qualityOutput.replaceWith('<span class="quality-value">' + qualityValue[i] + '</span>');
+  debugger;
+  var newCounter = $(this).data("id");
+  if ( newCounter > 0) {
+    newCounter = (newCounter-1);
+    $(this).data('id', newCounter)
+    debugger
+    qualityOutput.replaceWith(
+      '<span class="quality-value">' + qualityKey[`${newCounter}`] + '</span>'
+    );
   }
 
   var id = parseInt(this.closest('li').id);
   var title = $(this).parent().parent('li').find('.idea-title').text();
   var description = $(this).parent().parent('li').find('.idea-description').text();
   var quality = $(this).parent().parent('li').find('.quality-value').text();
-  var details = JSON.stringify({'id': id, 'title': title, 'description': description, 'quality': quality});
+  var details = JSON.stringify({
+    'id': id,
+    'title': title,
+    'description': description,
+    'quality': quality,
+    'counter': newCounter
+  });
   localStorage.setItem(id, details);
 });
 
@@ -135,21 +146,27 @@ $('#search-bar').keyup(function () {
     });
 });
 
-function updateTitle() {
-  var id = parseInt(this.closest('li').id);
-  var title = $(this).parent().parent('li').find('.idea-title').text();
-  var description = $(this).parent().parent('li').find('.idea-description').text();
-  var quality = $(this).parent().parent('li').find('.quality-value').text();
-  var details = JSON.stringify({'id': id, 'title': title, 'description': description, 'quality': quality});
-  localStorage.setItem(id, details);
-};
+// function updateTitle() {
+//   var id = parseInt(this.closest('li').id);
+//   var title = $(this).parent().parent('li').find('.idea-title').text();
+//   var description = $(this).parent().parent('li').find('.idea-description').text();
+//   var quality = $(this).parent().parent('li').find('.quality-value').text();
+//   var details = JSON.stringify({'id': id, 'title': title, 'description': description, 'quality': quality});
+//   localStorage.setItem(id, details);
+// };
 
 $('ul').on('focusout', '.idea-title', function () {
   var id = parseInt(this.closest('li').id);
   var title = $(this).parent().parent('li').find('.idea-title').text();
   var description = $(this).parent().parent('li').find('.idea-description').text();
   var quality = $(this).parent().parent('li').find('.quality-value').text();
-  var details = JSON.stringify({'id': id, 'title': title, 'description': description, 'quality': quality});
+  var details = JSON.stringify({
+    'id': id,
+    'title': title,
+    'description': description,
+    'quality': quality,
+    'counter': newCounter
+  });
   localStorage.setItem(id, details);
   clearIdeas();
   renderIdeas();
@@ -160,7 +177,14 @@ $('ul').on('focusout', '.idea-description', function () {
   var title = $(this).parent('li').find('.idea-title').text();
   var description = $(this).parent('li').find('.idea-description').text();
   var quality = $(this).parent('li').find('.quality-value').text();
-  var details = JSON.stringify({'id': id, 'title': title, 'description': description, 'quality': quality});
+  // var newCounter = $(this).parent('li').find
+  var details = JSON.stringify({
+    'id': id,
+    'title': title,
+    'description': description,
+    'quality': quality,
+    'counter': newCounter
+  });
   localStorage.setItem(id, details);
   clearIdeas();
   renderIdeas();
