@@ -55,20 +55,23 @@ function renderIdeas(qualityStuff) {
 }
 
 function renderTheIdea(id, title, description, quality, counter) {
-    $('ul').prepend(
-        '<li id=' + id + '>' +
-        '<section class="li-header">' +
-        '<h2 class="idea-title" contenteditable="true">' + title + '</h2>' +
-        '<button class="delete-button" type=button></button>' +
-        '</section>' +
-        '<p class="idea-description" contenteditable="true">' + description + '</p>' +
-        '<section class="li-footer">' +
-        '<button class="upvote-button" type=button data-id=' + counter + '></button>' +
-        '<button class="downvote-button" type=button data-id=' + counter + '></button>' +
-        '<p class="ranking">' + 'Ranking:' + '<span class="quality-value">' + quality + '</span>' + '</p>' +
-        '</section>' +
-        '</li>');
+    $('ul').prepend(`
+        <li id="${id}">
+        <section class="li-header">
+        <h2 class="idea-title" contenteditable="true">${title}</h2>
+        <button class="delete-button" type=button></button>
+        </section>
+        <p class="idea-description" contenteditable="true">${description}</p>
+        <section class="li-footer">
+        <button class="upvote-button" type=button data-id="${counter}"></button>
+        <button class="downvote-button" type=button data-id="${counter}"></button>
+        <p class="ranking">Ranking:<span class="quality-value">${quality}</span></p>
+        </section>
+        </li>
+      `);
 };
+
+// Refreshing the DOM
 
 function reRenderDOM() {
     clearIdeas();
@@ -91,7 +94,7 @@ $('ul').on('click', '.delete-button', function() {
     $(this).parent().parent().remove('li');
 });
 
-//Upvote and Downvote Buttons
+// Get and Store Ideas in localStorage
 
 function getIdea(id) {
     return JSON.parse(localStorage.getItem(id));
@@ -100,6 +103,8 @@ function getIdea(id) {
 function storeIdea(id, idea) {
     localStorage.setItem(id, JSON.stringify(idea));
 }
+
+//Upvote and Downvote Buttons
 
 $('ul').on('click', '.upvote-button', function() {
     var qualityOutput = $(this).parent().parent('li').find('.quality-value');
